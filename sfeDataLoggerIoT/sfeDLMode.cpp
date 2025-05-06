@@ -132,7 +132,7 @@ uint32_t dlModeCheckSystem(void)
     for (int32_t block3Address = EFUSE_BLK3_RDATA0_REG; block3Address <= EFUSE_BLK3_RDATA7_REG; block3Address += 4)
     {
         // this is read in 4 byte chunks...
-        uint32_t block = REG_GET_FIELD(block3Address, EFUSE_BLK3_DOUT0);
+        uint32_t block = REG_READ(block3Address);//REG_GET_FIELD(block3Address, EFUSE_BLK3_DOUT0);
 
         data_buffer[i++] = block & 0xFF;
         data_buffer[i++] = block >> 8 & 0xFF;
