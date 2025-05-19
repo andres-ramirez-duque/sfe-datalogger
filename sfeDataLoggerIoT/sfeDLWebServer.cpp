@@ -55,8 +55,8 @@ bool sfeDLWebServer::checkAuthState(AsyncWebServerRequest *request)
             // on some browsers, auth of the web page doesn't auth the web-socket connection. So we manage
             // this here. If we are not auth for a web page, we make sure auth is set for socket.
             //
-            if (_pWebSocket)
-                _pWebSocket->setAuthentication(authUsername().c_str(), authPassword().c_str());
+            //if (_pWebSocket)
+            //    _pWebSocket->setAuthentication(authUsername().c_str(), authPassword().c_str());
 
             request->requestAuthentication(kWebServerAuthRelm);
             return false;
@@ -64,8 +64,8 @@ bool sfeDLWebServer::checkAuthState(AsyncWebServerRequest *request)
         else
         {
             // we are auth'd - disable auth on the web socket
-            if (_pWebSocket)
-                _pWebSocket->setAuthentication("", "");
+            //if (_pWebSocket)
+            //    _pWebSocket->setAuthentication("", "");
         }
     }
 
@@ -119,8 +119,8 @@ bool sfeDLWebServer::setupServer(void)
 
     _pWebServer->addHandler(_pWebSocket);
 
-    if (authUsername().length() > 0)
-        _pWebSocket->setAuthentication(authUsername().c_str(), authPassword().c_str());
+    //if (authUsername().length() > 0)
+    //    _pWebSocket->setAuthentication(authUsername().c_str(), authPassword().c_str());
 
     // do a simple callback for now.
 
