@@ -13,6 +13,7 @@ include(flux_sdk_import.cmake)
 
 # Where is directory that the flux stuff will be added to? This is the relative path from this file
 # to the aurdiuno sketch directory this is also used as the name of the cmake project
+flux_sdk_set_library_name(SparkFun_Flux)
 flux_sdk_set_project_directory(.)
 
 # datalogger is esp32 based

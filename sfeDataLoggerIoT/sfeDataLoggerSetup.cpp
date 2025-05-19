@@ -188,7 +188,8 @@ void sfeDataLogger::setupBioHub()
     if (_bioHub.initialize(kAppBioHubReset,
                            kAppBioHubMFIO)) // Initialize the bio hub using the reset and mfio pins,
     {
-        flxLog_I(F("%s is enabled"), _bioHub.name());
+        
+        flxLog_I(F("%s is enabled and initialized: %s"), _bioHub.name(), _bioHub.isInitialized() ? "true" : "false");
         _logger.add(_bioHub);
     }
 }
