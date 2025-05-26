@@ -102,10 +102,10 @@ const uint32_t kStartupLoopDelayMS = 70;
 sfeDataLogger::sfeDataLogger()
     : _logTypeSD{kAppLogTypeNone}, _logTypeSer{kAppLogTypeNone}, _timer{kDefaultLogInterval}, _isValidMode{false},
       _modeFlags{0}, _opFlags{0}, _fuelGauge{nullptr}, _bSleepEnabled{false}, _bLogSysInfo{false}, _pSystemInfo{nullptr}
-#ifdef ENABLE_OLED_DISPLAY
+//#ifdef ENABLE_OLED_DISPLAY
       ,
       _pDisplay{nullptr}
-#endif
+//#endif
 {
 
     // Add a title for this section - the application level  - of settings
@@ -443,16 +443,17 @@ void sfeDataLogger::onDeviceLoad()
         }
     }
 
-#ifdef ENABLE_OLED_DISPLAY
+//#ifdef ENABLE_OLED_DISPLAY
     // OLED connected?
     auto oled = flux.get<flxDevMicroOLED>();
     if (oled->size() > 0)
     {
         _microOLED = oled->at(0);
         _pDisplay = new sfeDLDisplay();
-        _pDisplay->initialize(_microOLED, &_wifiConnection, _fuelGauge, &_theSDCard);
+        //_pDisplay->initialize(_microOLED, &_wifiConnection, _fuelGauge, &_theSDCard);
+        _pDisplay->initialize(_microOLED);
     }
-#endif
+//#endif
 
     // Was a button attached? If it is, on press event, we trigger a log event.
     // To do this, we need to *wire up* the events
@@ -772,10 +773,10 @@ bool sfeDataLogger::onStart()
     clearOpMode(kDataLoggerOpStartup);
     clearOpMode(kDataLoggerOpStartAllFlags);
 
-#ifdef ENABLE_OLED_DISPLAY
+//#ifdef ENABLE_OLED_DISPLAY
     if (_pDisplay)
         _pDisplay->update();
-#endif
+//#endif
     sfeLED.off();
 
     // we are done with startup - reset output mode
@@ -853,7 +854,8 @@ void sfeDataLogger::checkBatteryLevels(void)
         color = sfeLED.Yellow;
     else
         color = sfeLED.Green;
-
+    _pDisplay->onGrUpdate();
+    flxLog_I(F("Display -> on Graphicx Update done... "));
     sfeLED.flash(color);
 }
 

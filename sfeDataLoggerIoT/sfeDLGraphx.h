@@ -9,7 +9,7 @@
  */
 #pragma once
 
-#ifdef THIS_IS_ENABLED
+//#ifdef THIS_IS_ENABLED
 #include <cstdint>
 #include <vector>
 
@@ -113,4 +113,4 @@ class sfeDLGrView : public sfeDLGraphic
     std::vector<sfeDLGraphic *> _children;
 };
 
-#endif
+//#endif
