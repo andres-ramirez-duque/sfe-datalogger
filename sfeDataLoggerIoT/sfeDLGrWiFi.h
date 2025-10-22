@@ -9,7 +9,6 @@
  */
 #pragma once
 
-#ifdef IF_THIS_IS_ENABLED
 #include "sfeDLGraphx.h"
 
 // Icons
@@ -46,7 +45,7 @@ class sfeDLGrWiFi : public sfeDLGraphic
         screen->bitmap(rect.x + 1, rect.y + 1, (uint8_t *)kIconsWiFi[_currentBitmap], kIconWiFiWidth, kIconWiFiHeight);
     }
 
-    void updateValue(uint value)
+    void updateValue(uint8_t value)
     {
         if (value < 4 && _currentBitmap != value)
         {
@@ -54,7 +53,7 @@ class sfeDLGrWiFi : public sfeDLGraphic
             update();
         }
     }
-    void listenForUpdate(flxSignalUInt &theEvent)
+    void listenForUpdate(flxSignalUInt8 &theEvent)
     {
         theEvent.call(this, &sfeDLGrWiFi::updateValue);
     }
@@ -62,4 +61,3 @@ class sfeDLGrWiFi : public sfeDLGraphic
   private:
     uint16_t _currentBitmap;
 };
-#endif

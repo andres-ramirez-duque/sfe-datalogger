@@ -50,7 +50,8 @@
 
 // Biometric Hub -- requires pins to be set on startup
 #include <Flux/flxDevBioHub.h>
-
+// GNSS Device
+#include <Flux/flxDevGNSS.h>
 // Fuel gauge
 #include <Flux/flxDevMAX17048.h>
 
@@ -90,6 +91,9 @@ const uint16_t kAppNTPStartupDelaySecs = 5;
 
 // Battery check interval (90 seconds)
 const uint32_t kBatteryCheckInterval = 90000;
+
+// Display (onGraphics) Update interval (5 seconds)
+const uint32_t kDisplayUpdateInterval = 5000;
 
 // Default Sleep Periods
 const uint16_t kSystemSleepSleepSec = 60;
@@ -351,6 +355,9 @@ class sfeDataLogger : public flxApplication
     // battery level checks
     void checkBatteryLevels(void);
 
+    // On Oled graphics Update()
+    void onGrUpdate(void);
+
     // Class members -- that make up the application structure
 
     // WiFi and NTP
@@ -434,9 +441,15 @@ class sfeDataLogger : public flxApplication
 
     // // oled
     flxDevMicroOLED *_microOLED;
+    
+    // a GNSS (GPS) Device
+    flxDevGNSS *_gnss;
 
     // battery check event
     std::unique_ptr<flxJob> _batteryJob;
+
+    // display update event
+    std::unique_ptr<flxJob> _displayJob;
 
     // sleep things - is enabled storage, sleep event
     bool _bSleepEnabled;

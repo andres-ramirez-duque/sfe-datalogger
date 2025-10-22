@@ -448,10 +448,13 @@ void sfeDataLogger::onDeviceLoad()
     auto oled = flux.get<flxDevMicroOLED>();
     if (oled->size() > 0)
     {
+        // Any GNSS devices attached?
+        auto allGNSS = flux.get<flxDevGNSS>();
+        if (allGNSS->size() > 0)
+            _gnss = allGNSS->at(0);
         _microOLED = oled->at(0);
         _pDisplay = new sfeDLDisplay();
-        //_pDisplay->initialize(_microOLED, &_wifiConnection, _fuelGauge, &_theSDCard);
-        _pDisplay->initialize(_microOLED);
+        _pDisplay->initialize(_microOLED, &_wifiConnection, _fuelGauge, &_onboardIMU, &_bioHub, _gnss);
     }
 //#endif
 
@@ -775,7 +778,15 @@ bool sfeDataLogger::onStart()
 
 //#ifdef ENABLE_OLED_DISPLAY
     if (_pDisplay)
+    {
         _pDisplay->update();
+        _displayJob.reset(new flxJob);
+        if (_displayJob != nullptr)
+        {
+            _displayJob->setup("Display", kDisplayUpdateInterval, this, &sfeDataLogger::onGrUpdate);
+            flxAddJobToQueue(*_displayJob);
+        }
+    }
 //#endif
     sfeLED.off();
 
@@ -854,11 +865,24 @@ void sfeDataLogger::checkBatteryLevels(void)
         color = sfeLED.Yellow;
     else
         color = sfeLED.Green;
+    sfeLED.flash(color);
+}
+//---------------------------------------------------------------------------
+// On Oled graphics Update()
+//
+// If a Oled is attached, update the icons displayed
+//
+void sfeDataLogger::onGrUpdate(void)
+{
+    if (!_pDisplay)
+        return;
+
+    sfeLEDColor_t color;
+    color = sfeLED.Yellow;
     _pDisplay->onGrUpdate();
     flxLog_I(F("Display -> on Graphicx Update done... "));
     sfeLED.flash(color);
 }
-
 //---------------------------------------------------------------------------
 // loop()
 //
