@@ -16,13 +16,13 @@
 #define kDLVersionNumberMajor 1
 
 // Minor version number
-#define kDLVersionNumberMinor 2
+#define kDLVersionNumberMinor 5
 
 // Point version number
-#define kDLVersionNumberPoint 03
+#define kDLVersionNumberPoint 0
 
 // Version string description
-#define kDLVersionDescriptor "Version 1.2.03 Development UoG-Grasping"
+#define kDLVersionDescriptor "Version 1.5.0 Development UoG-Grasping Data Project 2026"
 
 // app name/class ID string
 #define kDLAppClassNameID "SFE-DATALOGGER-IOT"
@@ -33,4 +33,4 @@
 #define BUILD_NUMBER 0
 #endif
 
-#define kDLVersionBoardDesc "(c) 2023-2024 SparkFun Electronics"
+#define kDLVersionBoardDesc "(c) 2023-2026 SparkFun Electronics"
